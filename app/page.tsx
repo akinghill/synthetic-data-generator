@@ -17,6 +17,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { toast } from "sonner";
 import { Copy, Download, Loader2, Sparkles, FileDigit } from "lucide-react";
 import { ModeToggle } from "@/components/theme-toggle";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Home() {
   const [selectedPresetId, setSelectedPresetId] = useState<string>(PRESETS[0].id);
@@ -178,7 +179,7 @@ export default function Home() {
         {/* Output Column */}
         <div className="lg:col-span-2 flex flex-col h-full min-h-[500px]">
           <Card className="flex-1 flex flex-col overflow-hidden h-full">
-            <div className="flex items-center justify-between p-4 border-b bg-muted/50">
+            <div className="flex items-center justify-between p-4 pt-0 border-b">
               <h2 className="font-semibold text-sm">Generated Output</h2>
               <div className="flex items-center gap-2">
                 <Button variant="outline" size="sm" onClick={handleCopy} disabled={!data}>
@@ -192,13 +193,26 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="flex-1 p-0 overflow-auto bg-muted/30 text-foreground font-mono text-sm relative">
+            <div className="flex-1 p-4 overflow-auto text-foreground font-mono text-sm relative">
               {loading ? (
-                <div className="absolute inset-0 flex items-center justify-center bg-background/50 z-10">
-                  <div className="flex flex-col items-center gap-2">
-                    <Loader2 className="h-8 w-8 animate-spin text-primary" />
-                    <span className="text-muted-foreground font-medium">Thinking...</span>
+                <div className="p-4 space-y-3">
+                  <div className="flex items-center space-x-4">
+                    <Skeleton className="h-4 w-[20px]" />
+                    <Skeleton className="h-4 w-[200px]" />
                   </div>
+                  <div className="space-y-2 pl-4">
+                    {Array.from({ length: 12 }).map((_, i) => (
+                      <Skeleton
+                        key={i}
+                        className="h-4"
+                        style={{
+                          width: `${30 + (i * 13) % 41}%`,
+                          animationDelay: `${i * 0.1}s`
+                        }}
+                      />
+                    ))}
+                  </div>
+                  <Skeleton className="h-4 w-[20px]" />
                 </div>
               ) : null}
 
@@ -206,7 +220,7 @@ export default function Home() {
                 <pre className="p-4">{JSON.stringify(data, null, 2)}</pre>
               ) : (
                 !loading && (
-                  <div className="h-full flex flex-col items-center justify-center text-muted-foreground p-8 text-center">
+                  <div className="h-full flex flex-col items-center justify-center text-muted-foreground text-center">
                     <Sparkles className="h-12 w-12 mb-4 opacity-20" />
                     <p>Select a preset and click Generate to start.</p>
                   </div>
