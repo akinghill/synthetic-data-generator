@@ -1,8 +1,7 @@
 # Synthetic Data Generator
 
 A minimal and fast tool to generate structured JSON test data using AI.
-
-**Mantra:** Generate → Copy → Go
+Generate → Copy → Go
 
 ## Features
 
@@ -23,7 +22,7 @@ A minimal and fast tool to generate structured JSON test data using AI.
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/akinghill/synthetic-data-generator.git
    cd synthetic-data-generator
    ```
 

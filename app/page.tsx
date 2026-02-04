@@ -16,6 +16,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { toast } from "sonner";
 import { Copy, Download, Loader2, Sparkles, FileDigit } from "lucide-react";
+import { ModeToggle } from "@/components/theme-toggle";
 
 export default function Home() {
   const [selectedPresetId, setSelectedPresetId] = useState<string>(PRESETS[0].id);
@@ -71,16 +72,18 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex flex-col font-sans text-slate-900 dark:text-slate-50">
+    <div className="min-h-screen bg-background flex flex-col font-sans text-foreground">
       {/* Header */}
-      <header className="border-b bg-white dark:bg-slate-950 px-6 py-4 flex items-center justify-between sticky top-0 z-10">
+      <header className="border-b bg-background/95 backdrop-blur px-6 py-4 flex items-center justify-between sticky top-0 z-10">
         <div className="flex items-center gap-2">
-          <FileDigit className="h-6 w-6 text-indigo-600 dark:text-indigo-400" />
+          <FileDigit className="h-6 w-6 text-primary" />
+
           <div>
             <h1 className="text-xl font-bold tracking-tight">Synthetic Data Generator</h1>
-            <p className="text-xs text-slate-500 dark:text-slate-400">generate → copy → go</p>
+            <p className="text-xs text-muted-foreground">generate → copy → go</p>
           </div>
         </div>
+        <ModeToggle />
       </header>
 
       {/* Main Content */}
@@ -111,7 +114,7 @@ export default function Home() {
                   </SelectContent>
                 </Select>
                 {selectedPreset && (
-                  <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+                  <p className="text-sm text-muted-foreground mt-1">
                     {selectedPreset.description}
                   </p>
                 )}
@@ -136,7 +139,7 @@ export default function Home() {
 
               {/* Generate Button */}
               <Button
-                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white"
+                className="w-full"
                 size="lg"
                 onClick={handleGenerate}
                 disabled={loading}
@@ -159,12 +162,12 @@ export default function Home() {
 
           {/* Schema Preview */}
           {selectedPreset && (
-            <Card className="bg-slate-50 dark:bg-slate-900 border-dashed">
+            <Card className="bg-muted/50 border-dashed">
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm font-medium">Schema Preview</CardTitle>
               </CardHeader>
               <CardContent>
-                <pre className="text-xs text-slate-600 dark:text-slate-400 font-mono overflow-auto max-h-[300px]">
+                <pre className="text-xs text-muted-foreground font-mono overflow-auto max-h-[300px]">
                   {JSON.stringify(selectedPreset.schema, null, 2)}
                 </pre>
               </CardContent>
@@ -175,7 +178,7 @@ export default function Home() {
         {/* Output Column */}
         <div className="lg:col-span-2 flex flex-col h-full min-h-[500px]">
           <Card className="flex-1 flex flex-col overflow-hidden h-full">
-            <div className="flex items-center justify-between p-4 border-b bg-slate-50/50 dark:bg-slate-900/50">
+            <div className="flex items-center justify-between p-4 border-b bg-muted/50">
               <h2 className="font-semibold text-sm">Generated Output</h2>
               <div className="flex items-center gap-2">
                 <Button variant="outline" size="sm" onClick={handleCopy} disabled={!data}>
@@ -189,12 +192,12 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="flex-1 p-0 overflow-auto bg-slate-950 text-slate-50 font-mono text-sm relative">
+            <div className="flex-1 p-0 overflow-auto bg-muted/30 text-foreground font-mono text-sm relative">
               {loading ? (
-                <div className="absolute inset-0 flex items-center justify-center bg-white/50 dark:bg-slate-950/50 z-10">
+                <div className="absolute inset-0 flex items-center justify-center bg-background/50 z-10">
                   <div className="flex flex-col items-center gap-2">
-                    <Loader2 className="h-8 w-8 animate-spin text-indigo-500" />
-                    <span className="text-slate-500 font-medium">Thinking...</span>
+                    <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                    <span className="text-muted-foreground font-medium">Thinking...</span>
                   </div>
                 </div>
               ) : null}
@@ -203,7 +206,7 @@ export default function Home() {
                 <pre className="p-4">{JSON.stringify(data, null, 2)}</pre>
               ) : (
                 !loading && (
-                  <div className="h-full flex flex-col items-center justify-center text-slate-400 p-8 text-center">
+                  <div className="h-full flex flex-col items-center justify-center text-muted-foreground p-8 text-center">
                     <Sparkles className="h-12 w-12 mb-4 opacity-20" />
                     <p>Select a preset and click Generate to start.</p>
                   </div>
@@ -216,7 +219,7 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t py-6 text-center text-sm text-slate-500 dark:text-slate-400">
+      <footer className="border-t py-6 text-center text-sm text-muted-foreground">
         <p>© {new Date().getFullYear()} Synthetic Data Generator. Open Source MVP.</p>
         <div className="mt-2 space-x-4">
           <span className="hover:underline cursor-pointer">GitHub</span>
